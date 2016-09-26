@@ -63,8 +63,10 @@ function generateControllersFromItem(loader, source, mainCallback) {
     }
 
     function getImportPath(o, callback){
-      if(loader.options.pieControllers && loader.options.pieControllers[o.comp]){
-        o.importPath = loader.options.pieControllers[o.comp];
+      if(loader.options.generateControllersLoader &&
+        loader.options.generateControllersLoader.pieControllers &&
+        loader.options.generateControllersLoader.pieControllers[o.comp]){
+        o.importPath = loader.options.generateControllersLoader.pieControllers[o.comp];
       } else if (o.packageContent.controller) {
         o.importPath = path.join(o.comp, o.packageContent.controller);
       } else {

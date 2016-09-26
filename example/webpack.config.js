@@ -30,7 +30,9 @@ module.exports = {
       "generate-controllers-loader": path.join("..", "index")
     }
   },
-  pieControllers: {
-    "pie-one" : "./test-controller.js"
+  generateControllersLoader: {
+    pieControllers: {
+      "pie-one": "./test-controller.js"
+    }
   }
 };
