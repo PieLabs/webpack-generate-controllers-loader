@@ -3,7 +3,7 @@ var async = require('async');
 var path = require('path');
 var utils = require('loader-utils');
 var upperCamelCase = require('uppercamelcase')
-var debug = require('debug')('loader/generate-controllers-loader');
+var debug = require('debug')('generate-controllers-loader');
 
 //use it like so
 //import controllersMap from 'babel-loader?presets[]=es2015!generate-controllers-loader!./item.json';
@@ -33,9 +33,9 @@ function generateControllersFromItem(loader, source, mainCallback) {
   function compToData(comp, callback) {
     async.waterfall([
       initData,
-      resolvePackage,
-      getPackageContent,
-      getImportPath,
+      getImportPathFromConfig,
+      getImportPathFromPackageJson,
+      getImportPathDefault,
       addData
     ], callback);
 
@@ -43,33 +43,40 @@ function generateControllersFromItem(loader, source, mainCallback) {
       callback(null, {comp: comp});
     }
 
-    function resolvePackage(o, callback){
-      var pathToResolve = path.join(comp, 'package.json');
-      loader.resolve(loader.context, pathToResolve, function (err, res) {
-        if(!err){
-          o.package = res
-        }
-        callback(err, o);
-      });
-    }
-
-    function getPackageContent(o, callback) {
-      try {
-        o.packageContent = require(o.package);
-      } catch (e) {
-        o.packageContent = {};
-      }
-      callback(null, o);
-    }
-
-    function getImportPath(o, callback){
+    function getImportPathFromConfig(o, callback){
       if(loader.options.generateControllersLoader &&
         loader.options.generateControllersLoader.pieControllers &&
         loader.options.generateControllersLoader.pieControllers[o.comp]){
         o.importPath = loader.options.generateControllersLoader.pieControllers[o.comp];
-      } else if (o.packageContent.controller) {
-        o.importPath = path.join(o.comp, o.packageContent.controller);
+      }
+      callback(null, o);
+    }
+
+    function getImportPathFromPackageJson(o, callback){
+      if(o.importPath){
+        callback(null, o);
       } else {
+        var pathToResolve = path.join(comp, 'package.json');
+        loader.resolve(loader.context, pathToResolve, function (err, package) {
+          if(err) {
+            callback(err, o);
+          } else {
+            try {
+              var packageContent = require(package);
+              if (packageContent.controller) {
+                o.importPath = path.join(o.comp, packageContent.controller);
+              }
+              callback(null, o);
+            } catch (e) {
+              callback(e, o);
+            }
+          }
+        });
+      }
+    }
+
+    function getImportPathDefault(o, callback){
+      if(!o.importPath){
         o.importPath = path.join(o.comp, 'controller');
       }
       callback(null, o);
