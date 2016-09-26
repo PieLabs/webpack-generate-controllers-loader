@@ -11,6 +11,15 @@ Run (see webpack configuration in example folder)
  webpack 
 ```
 
+Usage 
+The example below generates the map from the local file ./item.json
+and feeds the result to the babel-loader to convert it from es6 to 
+plain javascript 
+
+```
+import controllersMap from 'babel-loader?presets[]=es2015!generate-controllers-loader!./item.json';
+```
+
 Configuration 
 
 There is one special configuration option in the webpack 
