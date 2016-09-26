@@ -1,0 +1,21 @@
+{
+  "name": "webpack-generate-controllers-loader",
+  "version": "1.0.0",
+  "description": "A webpack loader for pie to create a map of controllers from item.json",
+  "main": "index.js",
+  "dependencies": {
+    "async": "^2.0.1",
+    "debug": "^2.2.0",
+    "lodash": "^4.16.1",
+    "uppercamelcase": "^1.1.0",
+    "webpack": "^1.13.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PieLabs/webpack-generate-controllers-loader.git"
+  },
+  "bugs": {
+    "url": "https://github.com/PieLabs/webpack-generate-controllers-loader/issues"
+  },
+  "homepage": "https://github.com/PieLabs/webpack-generate-controllers-loader#readme"
+}

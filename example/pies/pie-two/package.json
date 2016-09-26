@@ -1,0 +1,6 @@
+{
+  "name": "pie-two",
+  "main" : "index.js",
+  "version": "1.0.0",
+  "controller": "nested/controller"
+}

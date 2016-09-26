@@ -1,0 +1,18 @@
+{
+  "components": [
+    {
+      "id": "1",
+      "component": {
+        "name": "pie-one",
+        "version": "1.0.0"
+      }
+    },
+    {
+      "id": "2",
+      "component": {
+        "name": "pie-two",
+        "version": "1.0.0"
+      }
+    }
+  ]
+}
